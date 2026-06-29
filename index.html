@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutriva — Premium Dry Fruits & Seeds</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1A3A2A;
+    --forest-mid: #2A5040;
+    --sand: #F5E6C8;
+    --gold: #D4873B;
+    --gold-light: #E8A355;
+    --offwhite: #FAF7F0;
+    --charcoal: #2C2C2C;
+    --muted: #6B6B6B;
+    --white: #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--offwhite);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(26,58,42,0.97);
+    backdrop-filter: blur(8px);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.18); }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--sand);
+    letter-spacing: 0.5px;
+  }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: rgba(245,230,200,0.8);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--white) !important;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-weight: 600 !important;
+    transition: background 0.2s, transform 0.15s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    background: var(--forest);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+  }
+
+  .hero-mosaic {
+    position: absolute; right: -20px; top: 0; bottom: 0;
+    width: 52%;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 4px;
+    opacity: 0.22;
+    pointer-events: none;
+  }
+  .mosaic-cell {
+    display: flex; align-items: center; justify-content: center;
+    font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  .mosaic-cell.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 80px;
+    max-width: 640px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(212,135,59,0.15);
+    border: 1px solid rgba(212,135,59,0.4);
+    color: var(--gold);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 700;
+    color: var(--sand);
+    line-height: 1.12;
+    margin-bottom: 22px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-desc {
+    font-size: 1.08rem;
+    line-height: 1.75;
+    color: rgba(245,230,200,0.72);
+    margin-bottom: 40px;
+    font-weight: 300;
+    max-width: 480px;
+  }
+
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--white);
+    padding: 15px 34px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(212,135,59,0.35);
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,135,59,0.45); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--sand);
+    padding: 15px 34px;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 1.5px solid rgba(245,230,200,0.3);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--sand); background: rgba(245,230,200,0.07); }
+
+  .hero-stats {
+    display: flex; gap: 40px;
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(245,230,200,0.15);
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: rgba(245,230,200,0.55);
+    margin-top: 2px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ===== MARQUEE ===== */
+  .marquee-bar {
+    background: var(--gold);
+    padding: 13px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-flex;
+    animation: marquee 22s linear infinite;
+  }
+  .marquee-item {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.5px;
+    padding: 0 28px;
+    text-transform: uppercase;
+  }
+  .marquee-item::after { content: "✦"; padding-left: 28px; opacity: 0.6; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ===== SECTION SHARED ===== */
+  section { padding: 96px 0; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+  .section-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 700;
+    color: var(--forest);
+    line-height: 1.2;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* ===== CATEGORIES ===== */
+  .categories { background: var(--offwhite); }
+
+  .categories-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 52px;
+  }
+  .view-all {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: flex; align-items: center; gap: 6px;
+    transition: gap 0.2s;
+  }
+  .view-all:hover { gap: 12px; }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .category-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .category-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(26,58,42,0.12); }
+
+  .category-thumb {
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .category-thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.08));
+  }
+
+  .category-info { padding: 20px 22px; }
+  .category-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 4px;
+  }
+  .category-count { font-size: 0.82rem; color: var(--muted); }
+
+  /* ===== PRODUCTS ===== */
+  .products { background: var(--sand); }
+
+  .products-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 48px;
+  }
+
+  .filter-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 0; }
+  .filter-tab {
+    padding: 8px 20px;
+    border-radius: 50px;
+    border: 1.5px solid rgba(26,58,42,0.18);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--forest);
+  }
+  .filter-tab.active, .filter-tab:hover {
+    background: var(--forest);
+    color: var(--sand);
+    border-color: var(--forest);
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+
+  .product-card {
+    background: var(--white);
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+  }
+  .product-card:hover { transform: translateY(-5px); box-shadow: 0 16px 44px rgba(26,58,42,0.13); }
+
+  .product-badge {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    background: var(--gold);
+    color: var(--white);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .product-badge.organic { background: var(--forest); }
+
+  .product-thumb {
+    height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 5rem;
+    background: var(--offwhite);
+  }
+
+  .product-info { padding: 18px 20px 20px; }
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 4px;
+  }
+  .product-origin { font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; }
+
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price { font-size: 1.2rem; font-weight: 700; color: var(--forest); }
+  .product-price span { font-size: 0.78rem; font-weight: 400; color: var(--muted); }
+
+  .add-btn {
+    width: 38px; height: 38px;
+    background: var(--forest);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.15s;
+    line-height: 1;
+  }
+  .add-btn:hover { background: var(--gold); transform: scale(1.1); }
+
+  /* ===== BANNER ===== */
+  .promo-banner {
+    background: var(--forest);
+    padding: 80px 0;
+  }
+  .banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  .banner-text .label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .banner-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    color: var(--sand);
+    line-height: 1.25;
+    max-width: 480px;
+  }
+  .banner-text p {
+    font-size: 1rem;
+    color: rgba(245,230,200,0.65);
+    margin-top: 14px;
+    max-width: 420px;
+    line-height: 1.7;
+  }
+
+  .bundle-cards { display: flex; gap: 16px; }
+  .bundle-card {
+    background: rgba(245,230,200,0.07);
+    border: 1px solid rgba(245,230,200,0.15);
+    border-radius: 16px;
+    padding: 24px;
+    min-width: 190px;
+    transition: background 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+  .bundle-card:hover { background: rgba(245,230,200,0.12); border-color: rgba(212,135,59,0.4); }
+
+  .bundle-emoji { font-size: 2.5rem; margin-bottom: 12px; }
+  .bundle-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--sand); margin-bottom: 6px; }
+  .bundle-items { font-size: 0.78rem; color: rgba(245,230,200,0.5); line-height: 1.6; margin-bottom: 14px; }
+  .bundle-price { font-size: 1.15rem; font-weight: 700; color: var(--gold); }
+
+  /* ===== WHY US ===== */
+  .why { background: var(--offwhite); }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    margin-top: 56px;
+  }
+
+  .why-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .why-tile {
+    background: var(--sand);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .why-tile:hover { transform: scale(1.03); }
+  .why-tile:first-child { grid-row: span 2; background: var(--forest); display: flex; flex-direction: column; justify-content: center; }
+  .why-tile-icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .why-tile-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--forest); margin-bottom: 6px; }
+  .why-tile:first-child .why-tile-title { color: var(--sand); font-size: 1.25rem; }
+  .why-tile-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+  .why-tile:first-child .why-tile-desc { color: rgba(245,230,200,0.65); }
+
+  .why-points { display: flex; flex-direction: column; gap: 28px; }
+  .why-point { display: flex; gap: 18px; align-items: flex-start; }
+  .why-point-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: rgba(212,135,59,0.12);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .why-point-title { font-weight: 600; color: var(--forest); margin-bottom: 4px; font-size: 0.98rem; }
+  .why-point-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials { background: var(--sand); }
+  .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 48px; }
+  .testi-card {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 28px 26px;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .testi-stars { font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
+  .testi-text { font-size: 0.9rem; line-height: 1.75; color: var(--charcoal); font-style: italic; margin-bottom: 20px; }
+  .testi-author { display: flex; align-items: center; gap: 12px; }
+  .testi-avatar { width: 42px; height: 42px; background: var(--forest); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+  .testi-name { font-weight: 600; font-size: 0.9rem; color: var(--forest); }
+  .testi-loc { font-size: 0.75rem; color: var(--muted); }
+
+  /* ===== NEWSLETTER ===== */
+  .newsletter {
+    background: var(--forest);
+    text-align: center;
+    padding: 80px 0;
+  }
+  .newsletter h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    color: var(--sand);
+    margin-bottom: 12px;
+  }
+  .newsletter p { color: rgba(245,230,200,0.6); margin-bottom: 32px; font-size: 0.95rem; }
+  .newsletter-form { display: flex; gap: 10px; justify-content: center; max-width: 460px; margin: 0 auto; }
+  .newsletter-form input {
+    flex: 1;
+    padding: 14px 22px;
+    border-radius: 50px;
+    border: 1.5px solid rgba(245,230,200,0.2);
+    background: rgba(245,230,200,0.07);
+    color: var(--sand);
+    font-size: 0.92rem;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s;
+  }
+  .newsletter-form input::placeholder { color: rgba(245,230,200,0.4); }
+  .newsletter-form input:focus { border-color: rgba(212,135,59,0.6); }
+  .newsletter-form button {
+    background: var(--gold);
+    color: var(--white);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .newsletter-form button:hover { background: var(--gold-light); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #0F2218;
+    padding: 64px 0 32px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 56px;
+  }
+  .footer-brand .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--sand);
+    margin-bottom: 14px;
+  }
+  .footer-brand .logo span { color: var(--gold); }
+  .footer-brand p { font-size: 0.85rem; color: rgba(245,230,200,0.45); line-height: 1.75; max-width: 240px; }
+
+  .footer-col h4 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a {
+    text-decoration: none;
+    font-size: 0.86rem;
+    color: rgba(245,230,200,0.5);
+    transition: color 0.2s;
+  }
+  .footer-col ul li a:hover { color: var(--sand); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(245,230,200,0.08);
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 0.8rem; color: rgba(245,230,200,0.3); }
+
+  .social-links { display: flex; gap: 12px; }
+  .social-link {
+    width: 36px; height: 36px;
+    background: rgba(245,230,200,0.07);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .social-link:hover { background: rgba(212,135,59,0.3); }
+
+  /* ===== CART TOAST ===== */
+  .cart-toast {
+    position: fixed; bottom: 28px; right: 28px; z-index: 200;
+    background: var(--forest);
+    color: var(--sand);
+    padding: 14px 22px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+    transform: translateY(80px); opacity: 0;
+    transition: transform 0.35s, opacity 0.35s;
+    border-left: 4px solid var(--gold);
+  }
+  .cart-toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .category-grid, .product-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .banner-inner { flex-direction: column; }
+    .bundle-cards { flex-wrap: wrap; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 14px 24px; }
+    .nav-links { display: none; }
+    .hero-content { padding: 0 24px; }
+    .hero-mosaic { display: none; }
+    .hero-title { font-size: 2.4rem; }
+    .container { padding: 0 24px; }
+    section { padding: 64px 0; }
+    .category-grid, .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .hero-stats { gap: 24px; }
+    .newsletter-form { flex-direction: column; }
+    .categories-header, .products-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .product-grid, .category-grid { grid-template-columns: 1fr; }
+    .hero-btns { flex-direction: column; }
+    .footer-bottom { flex-direction: column; gap: 16px; }
+  }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.revealed { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">Nutri<span>va</span></div>
+  <ul class="nav-links">
+    <li><a href="#categories">Shop</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#bundles">Bundles</a></li>
+    <li><a href="#why">Our Story</a></li>
+    <li><a href="#newsletter" class="nav-cta">Order Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-mosaic" id="mosaic"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">🌿 Farm to Doorstep</div>
+    <h1 class="hero-title">
+      Nature's Finest<br>
+      <em>Dry Fruits</em><br>
+      & Seeds
+    </h1>
+    <p class="hero-desc">
+      Handpicked from the world's most fertile valleys — Kashmir almonds, Persian pistachios, Turkish figs, and over 80 premium seeds and dried fruits. Zero additives. Pure goodness.
+    </p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-primary">Shop Now →</a>
+      <a href="#bundles" class="btn-secondary">View Bundles</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">80+</div>
+        <div class="stat-label">Products</div>
+      </div>
+      <div>
+        <div class="stat-num">12K+</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+      <div>
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Natural</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-track" id="marquee">
+    <span class="marquee-item">Premium Kashmiri Walnuts</span>
+    <span class="marquee-item">California Almonds</span>
+    <span class="marquee-item">Persian Pistachios</span>
+    <span class="marquee-item">Organic Chia Seeds</span>
+    <span class="marquee-item">Turkish Figs</span>
+    <span class="marquee-item">Afghani Raisins</span>
+    <span class="marquee-item">Pumpkin Seeds</span>
+    <span class="marquee-item">Macadamia Nuts</span>
+    <span class="marquee-item">Premium Kashmiri Walnuts</span>
+    <span class="marquee-item">California Almonds</span>
+    <span class="marquee-item">Persian Pistachios</span>
+    <span class="marquee-item">Organic Chia Seeds</span>
+    <span class="marquee-item">Turkish Figs</span>
+    <span class="marquee-item">Afghani Raisins</span>
+    <span class="marquee-item">Pumpkin Seeds</span>
+    <span class="marquee-item">Macadamia Nuts</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="container">
+    <div class="categories-header reveal">
+      <div>
+        <p class="section-eyebrow">Browse by Type</p>
+        <h2 class="section-title">Explore Our <em>Collections</em></h2>
+      </div>
+      <a href="#products" class="view-all">View All Products →</a>
+    </div>
+    <div class="category-grid">
+      <div class="category-card reveal">
+        <div class="category-thumb" style="background: linear-gradient(135deg, #FFF3E0, #FFE0B2);">🌰</div>
+        <div class="category-info">
+          <div class="category-name">Nuts & Almonds</div>
+          <div class="category-count">24 products</div>
+        </div>
+      </div>
+      <div class="category-card reveal">
+        <div class="category-thumb" style="background: linear-gradient(135deg, #E8F5E9, #C8E6C9);">🫒</div>
+        <div class="category-info">
+          <div class="category-name">Seeds & Grains</div>
+          <div class="category-count">18 products</div>
+        </div>
+      </div>
+      <div class="category-card reveal">
+        <div class="category-thumb" style="background: linear-gradient(135deg, #FCE4EC, #F8BBD0);">🫐</div>
+        <div class="category-info">
+          <div class="category-name">Dried Berries</div>
+          <div class="category-count">15 products</div>
+        </div>
+      </div>
+      <div class="category-card reveal">
+        <div class="category-thumb" style="background: linear-gradient(135deg, #FFF9C4, #FFF176);">🍯</div>
+        <div class="category-info">
+          <div class="category-name">Gift Hampers</div>
+          <div class="category-count">8 curated sets</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="container">
+    <div class="products-header reveal">
+      <div>
+        <p class="section-eyebrow">Bestsellers</p>
+        <h2 class="section-title">Most Loved <em>Products</em></h2>
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-tab active">All</button>
+        <button class="filter-tab">Nuts</button>
+        <button class="filter-tab">Seeds</button>
+        <button class="filter-tab">Berries</button>
+      </div>
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card reveal">
+        <div class="product-badge organic">Organic</div>
+        <div class="product-thumb">🥜</div>
+        <div class="product-info">
+          <div class="product-name">Kashmiri Almonds</div>
+          <div class="product-origin">✈️ Sourced from Kashmir Valley</div>
+          <div class="product-footer">
+            <div class="product-price">₹649 <span>/ 250g</span></div>
+            <button class="add-btn" onclick="addToCart('Kashmiri Almonds')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-badge">Bestseller</div>
+        <div class="product-thumb">🫑</div>
+        <div class="product-info">
+          <div class="product-name">Persian Pistachios</div>
+          <div class="product-origin">✈️ Sourced from Iran</div>
+          <div class="product-footer">
+            <div class="product-price">₹899 <span>/ 250g</span></div>
+            <button class="add-btn" onclick="addToCart('Persian Pistachios')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-badge organic">Organic</div>
+        <div class="product-thumb">🌱</div>
+        <div class="product-info">
+          <div class="product-name">Chia Seeds</div>
+          <div class="product-origin">✈️ Sourced from Mexico</div>
+          <div class="product-footer">
+            <div class="product-price">₹349 <span>/ 250g</span></div>
+            <button class="add-btn" onclick="addToCart('Chia Seeds')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-badge">New</div>
+        <div class="product-thumb">🍇</div>
+        <div class="product-info">
+          <div class="product-name">Afghani Raisins</div>
+          <div class="product-origin">✈️ Sourced from Afghanistan</div>
+          <div class="product-footer">
+            <div class="product-price">₹279 <span>/ 250g</span></div>
+            <button class="add-btn" onclick="addToCart('Afghani Raisins')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-badge organic">Organic</div>
+        <div class="product-thumb">🎃</div>
+        <div class="product-info">
+          <div class="product-name">Pumpkin Seeds</div>
+          <div class="product-origin">✈️ Sourced from Austria</div>
+          <div class="product-footer">
+            <div class="product-price">₹449 <span>/ 250g</span></div>
+            <button class="add-btn" onclick="addToCart('Pumpkin Seeds')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-badge">Bestseller</div>
+        <div class="product-thumb">🌰</div>
+        <div class="product-info">
+          <div class="product-name">Kashmiri Walnuts</div>
+          <div class="product-origin">✈️ Sourced from Kashmir</div>
+          <div class="product-footer">
+            <div class="product-price">₹549 <span>/ 250g</span></div>
+            <button class="add-btn" onclick="addToCart('Kashmiri Walnuts')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-badge organic">Organic</div>
+        <div class="product-thumb">🫐</div>
+        <div class="product-info">
+          <div class="product-name">Dried Blueberries</div>
+          <div class="product-origin">✈️ Sourced from USA</div>
+          <div class="product-footer">
+            <div class="product-price">₹599 <span>/ 200g</span></div>
+            <button class="add-btn" onclick="addToCart('Dried Blueberries')">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-badge">New</div>
+        <div class="product-thumb">🌻</div>
+        <div class="product-info">
+          <div class="product-name">Sunflower Seeds</div>
+          <div class="product-origin">✈️ Sourced from Ukraine</div>
+          <div class="product-footer">
+            <div class="product-price">₹249 <span>/ 250g</span></div>
+            <button class="add-btn" onclick="addToCart('Sunflower Seeds')">+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BUNDLES BANNER -->
+<section class="promo-banner" id="bundles">
+  <div class="container">
+    <div class="banner-inner">
+      <div class="banner-text reveal">
+        <div class="label">Curated Sets</div>
+        <h2>Give the Gift of<br>Premium Nutrition</h2>
+        <p>Hand-assembled bundles in premium packaging. Perfect for Diwali, birthdays, corporate gifting, and every occasion that deserves something truly special.</p>
+        <a href="#newsletter" class="btn-primary" style="display: inline-flex; margin-top: 28px;">Explore Bundles →</a>
+      </div>
+      <div class="bundle-cards reveal">
+        <div class="bundle-card">
+          <div class="bundle-emoji">🎁</div>
+          <div class="bundle-name">Wellness Pack</div>
+          <div class="bundle-items">Almonds · Walnuts<br>Chia · Pumpkin Seeds</div>
+          <div class="bundle-price">₹1,299</div>
+        </div>
+        <div class="bundle-card">
+          <div class="bundle-emoji">✨</div>
+          <div class="bundle-name">Premium Gift Box</div>
+          <div class="bundle-items">Pistachios · Cashews<br>Figs · Dried Berries</div>
+          <div class="bundle-price">₹2,199</div>
+        </div>
+        <div class="bundle-card">
+          <div class="bundle-emoji">👑</div>
+          <div class="bundle-name">Royal Hamper</div>
+          <div class="bundle-items">8 Premium Items<br>Luxury Packaging</div>
+          <div class="bundle-price">₹3,999</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="reveal" style="text-align:center; margin-bottom: 0;">
+      <p class="section-eyebrow">Why Nutriva</p>
+      <h2 class="section-title">Quality You Can <em>Taste</em></h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-visual reveal">
+        <div class="why-tile">
+          <div class="why-tile-icon" style="font-size: 3rem;">🌍</div>
+          <div class="why-tile-title">Sourced from 18+ countries</div>
+          <div class="why-tile-desc" style="color: rgba(245,230,200,0.55);">From Kashmir to California, we go where the best grows.</div>
+        </div>
+        <div class="why-tile">
+          <div class="why-tile-icon">🧪</div>
+          <div class="why-tile-title">Lab Tested</div>
+          <div class="why-tile-desc">Every batch tested for purity & freshness</div>
+        </div>
+        <div class="why-tile">
+          <div class="why-tile-icon">📦</div>
+          <div class="why-tile-title">Freshness Sealed</div>
+          <div class="why-tile-desc">Nitrogen-flushed packaging</div>
+        </div>
+        <div class="why-tile">
+          <div class="why-tile-icon">🚚</div>
+          <div class="why-tile-title">Pan-India Delivery</div>
+          <div class="why-tile-desc">Delivered in 3–5 business days</div>
+        </div>
+      </div>
+      <div class="why-points reveal">
+        <div class="why-point">
+          <div class="why-point-icon">🌿</div>
+          <div>
+            <div class="why-point-title">100% Natural, No Additives</div>
+            <div class="why-point-desc">We never add preservatives, artificial colors, or flavor enhancers. What you see is what nature made — nothing more.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon">🤝</div>
+          <div>
+            <div class="why-point-title">Direct from Farmers</div>
+            <div class="why-point-desc">We work directly with farming communities, cutting out middlemen to give you fresher products at fair prices.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon">♻️</div>
+          <div>
+            <div class="why-point-title">Eco-Conscious Packaging</div>
+            <div class="why-point-desc">Our packaging is made from recycled and biodegradable materials. Good for you, gentle on the planet.</div>
+          </div>
+        </div>
+        <div class="why-point">
+          <div class="why-point-icon">💯</div>
+          <div>
+            <div class="why-point-title">30-Day Freshness Guarantee</div>
+            <div class="why-point-desc">Not happy? We'll replace or refund — no questions asked. That's our promise.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <p class="section-eyebrow">Customer Love</p>
+      <h2 class="section-title">What Our <em>Customers</em> Say</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+        <p class="testi-text">"The Kashmiri almonds are unlike anything I've bought before. Incredibly fresh and full of flavour. Nutriva has become my go-to for all dry fruits."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">👩</div>
+          <div>
+            <div class="testi-name">Priya Mehta</div>
+            <div class="testi-loc">Mumbai, Maharashtra</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+        <p class="testi-text">"Ordered the Royal Hamper for Diwali gifting. My clients were absolutely impressed. The packaging is stunning and the quality speaks for itself."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">👨</div>
+          <div>
+            <div class="testi-name">Rajesh Sharma</div>
+            <div class="testi-loc">Delhi, NCR</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="testi-stars">⭐⭐⭐⭐⭐</div>
+        <p class="testi-text">"The chia seeds and pumpkin seeds are so fresh. I add them to my smoothies every morning. Fast delivery and great packaging too!"</p>
+        <div class="testi-author">
+          <div class="testi-avatar">👩</div>
+          <div>
+            <div class="testi-name">Ananya Iyer</div>
+            <div class="testi-loc">Bengaluru, Karnataka</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter" id="newsletter">
+  <div class="container">
+    <div class="reveal">
+      <h2>Get 10% Off Your First Order</h2>
+      <p>Subscribe for exclusive deals, seasonal picks, and healthy recipe ideas.</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Enter your email address…" id="emailInput">
+        <button onclick="subscribeNewsletter()">Claim Discount</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Nutri<span>va</span></div>
+        <p>Premium dry fruits and seeds sourced from across the globe, delivered fresh to your doorstep across India.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">Nuts & Almonds</a></li>
+          <li><a href="#">Seeds & Grains</a></li>
+          <li><a href="#">Dried Berries</a></li>
+          <li><a href="#">Gift Hampers</a></li>
+          <li><a href="#">Bundles</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Farm Partners</a></li>
+          <li><a href="#">Quality Standards</a></li>
+          <li><a href="#">Blog & Recipes</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">Return Policy</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Wholesale Enquiry</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Nutriva. All rights reserved. Made with 🌿 for health lovers.</p>
+      <div class="social-links">
+        <a href="#" class="social-link">📘</a>
+        <a href="#" class="social-link">📸</a>
+        <a href="#" class="social-link">🐦</a>
+        <a href="#" class="social-link">▶️</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- CART TOAST -->
+<div class="cart-toast" id="toast"></div>
+
+<script>
+  // Hero Mosaic
+  const emojis = ['🌰','🥜','🫑','🍇','🫐','🌱','🌻','🎃','🍑','🥝','🍒','🫘','🌾','🫚'];
+  const mosaic = document.getElementById('mosaic');
+  const cells = [];
+  for (let i = 0; i < 80; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'mosaic-cell';
+    cell.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    mosaic.appendChild(cell);
+    cells.push(cell);
+  }
+  cells.forEach((cell, i) => {
+    setTimeout(() => cell.classList.add('visible'), i * 30 + 200);
+  });
+
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, idx) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('revealed'), 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Filter tabs
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Cart toast
+  function addToCart(item) {
+    const toast = document.getElementById('toast');
+    toast.textContent = `✓ ${item} added to cart`;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2800);
+  }
+
+  // Newsletter
+  function subscribeNewsletter() {
+    const val = document.getElementById('emailInput').value.trim();
+    if (val && val.includes('@')) {
+      const toast = document.getElementById('toast');
+      toast.textContent = '🎉 10% discount code sent to your email!';
+      toast.classList.add('show');
+      document.getElementById('emailInput').value = '';
+      setTimeout(() => toast.classList.remove('show'), 3200);
+    }
+  }
+</script>
+</body>
+</html>
